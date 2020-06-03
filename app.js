@@ -9,7 +9,7 @@ app.get('/api', (req, res) => {
     })
 })
 
-//Route to be protect using JWT
+//Route to be protected using JWT
 app.post('/api/posts', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretKey', (err, authData) => {
         if(err) {
@@ -34,7 +34,7 @@ app.post('/api/login', (req, res) => {
     }
 
     //Creating a token for that particular user
-    jwt.sign({user: user}, 'secretKey', (err, token) => {
+    jwt.sign({user: user}, 'secretKey', {expiresIn: '30s'}, (err, token) => {
         res.json({
             token: token
         })
