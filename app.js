@@ -16,4 +16,22 @@ app.post('/api/posts', (req, res) => {
     })
 })
 
+//Route created to get the token (JWT)
+app.post('/api/login', (req, res) => {
+    
+    //Creating a Mock user
+    const user = {
+        id: 1,
+        username: 'dev',
+        email: 'dev@gmail.com'
+    }
+
+    //Creating a token for that particular user
+    jwt.sign({user: user}, 'secretKey', (err, token) => {
+        res.json({
+            token: token
+        })
+    })
+})
+
 app.listen(5000, () => console.log('Server running on port 5000'))
