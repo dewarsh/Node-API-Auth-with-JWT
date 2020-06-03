@@ -11,9 +11,16 @@ app.get('/api', (req, res) => {
 
 //Route to be protect using JWT
 app.post('/api/posts', verifyToken, (req, res) => {
-    res.json({
-        message: 'Post Created...'
-    })
+    jwt.verify(req.token, 'secretKey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403)
+        } else {
+            res.json({
+                message: 'Post Created...',
+                authData
+            })
+        }
+    })   
 })
 
 //Route created to get the token (JWT)
