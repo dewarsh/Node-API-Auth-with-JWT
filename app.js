@@ -10,7 +10,7 @@ app.get('/api', (req, res) => {
 })
 
 //Route to be protect using JWT
-app.post('/api/posts', (req, res) => {
+app.post('/api/posts', verifyToken, (req, res) => {
     res.json({
         message: 'Post Created...'
     })
@@ -33,5 +33,21 @@ app.post('/api/login', (req, res) => {
         })
     })
 })
+
+//FORMAT of Token
+//Authorization: Bearer <access_token>
+
+//Verify Token
+function verifyToken(req, res, next) {
+    //Get auth header value
+    const bearerHeader = req.headers['authorization']
+    //Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined') {
+
+    } else {
+        //Forbidden
+        res.sendStatus(403)
+    }
+}
 
 app.listen(5000, () => console.log('Server running on port 5000'))
